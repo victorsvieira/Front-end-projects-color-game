@@ -1,0 +1,16 @@
+.options-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 colunas iguais */
+  gap: 25px;
+}
+
+.option-button {
+  width: 200px;
+  height: 200px;
+  border-radius: 100%;
+  display: grid;
+  font-size: 70px;
+  text-shadow: 5px 5px 10px black;
+  justify-content: center;
+  align-content: center;
+}
