@@ -12,7 +12,7 @@ function App() {
         <LeftSidebar/>
       </div>
       <div className="main-content">
-      <h1>What color is this?</h1>
+      <h1>What color is this? (testing)</h1>
 <Game/>
       </div>
       <div className="right-sidebar">
