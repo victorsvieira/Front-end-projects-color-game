@@ -37,7 +37,7 @@ function Game() {
   }
 
   return (
-    <div>
+    <div className="game-main-content">
       <h2>
         {"Rgb (" +
           correctOption[0] +
@@ -67,6 +67,9 @@ function Game() {
             }}
           ></button>
         ))}
+      </div>
+      <div className="game-information">
+        {'To interpret an RGB color, use three numbers, typically from 0 to 255, to represent the intensity of red, green, and blue light. The first number is for red, the second for green, and the third for blue. A value of \(0\) means that color is off, and \(255\) means it is at full intensity. By combining these values, you can create any color, with the three primary values combined at full intensity (\(255,255,255\)) resulting in white and all values at zero (\(0,0,0\)) resulting in black'}
       </div>
     </div>
   );

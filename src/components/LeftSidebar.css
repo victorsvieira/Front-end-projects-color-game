@@ -1,0 +1,35 @@
+.left-sidebar-main-content{
+    display: flex;
+    flex: 2;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 40px;
+    margin: 0px 0px 0px 0px;
+}
+
+.game-modes, .storage-settings, .score-board {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.score-board{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
+
+.points-board, .error-board{
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+
+
+}
