@@ -1,6 +1,6 @@
-.game-main-content{
- flex: 8;
- max-width: 800px;
+.game-main-content {
+  flex: 8;
+  max-width: 800px;
 }
 
 .options-container {
@@ -18,4 +18,8 @@
   text-shadow: 5px 5px 10px black;
   justify-content: center;
   align-content: center;
+}
+
+.game-information {
+  flex: 8;
 }

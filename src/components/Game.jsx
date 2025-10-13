@@ -1,76 +1,180 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./Game.css";
+import { GameContext } from "../App";
+import RgbTutorial from "./tutorials/RgbTutorial";
+import HexTutorial from "./tutorials/HexTutorial";
+import HslTutorial from "./tutorials/HslTutorial";
 
 function Game() {
-  const [RGBValues, setRGBValues] = useState([[]]);
+  const { dispatch } = useContext(GameContext);
+  const { state } = useContext(GameContext);
+
+  const [colorValues, setColorValues] = useState([[]]);
   const [correctOption, setCorrectOption] = useState([]);
   const [nextRound, setNextRound] = useState(false);
   const [hiddenButtons, setHiddenButtons] = useState([]);
 
   useEffect(() => {
-    let values = [
-      [0, 0, 0],
-      [0, 0, 0],
-      [0, 0, 0],
-      [0, 0, 0],
-      [0, 0, 0],
-      [0, 0, 0],
-    ];
-
-    for (let i = 0; i < 6; i++) {
-      for (let j = 0; j < 3; j++) {
-        values[i][j] = Math.floor(Math.random() * 256);
+    if (String(state.gameMode) === "RGB") {
+      console.log("Entrou no modo de Jogo RGB.");
+      let RGBValues = [
+        [0, 0, 0],
+        [0, 0, 0],
+        [0, 0, 0],
+        [0, 0, 0],
+        [0, 0, 0],
+        [0, 0, 0],
+      ];
+      for (let i = 0; i < 6; i++) {
+        for (let j = 0; j < 3; j++) {
+          RGBValues[i][j] = Math.floor(Math.random() * 256);
+        }
       }
+      setColorValues(RGBValues);
+      const correctOption = RGBValues[Math.floor(Math.random() * 5)];
+      setCorrectOption(correctOption);
+      setHiddenButtons([]);
+    } else if (String(state.gameMode) === "HEX") {
+      console.log("Entrou no modo de Jogo HEX.");
+      let HEXArray = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"];
+      let HEXRandomValues = [];
+      for (let e = 0; e < 6; e++) {
+        let HEXRandomValue = "";
+        for (let i = 0; i < 6; i++) {
+          HEXRandomValue = HEXRandomValue + HEXArray[Math.floor(Math.random() * HEXArray.length)];
+        }
+        HEXRandomValues.push(HEXRandomValue);
+      }
+      setColorValues(HEXRandomValues);
+      const correctOption = HEXRandomValues[Math.floor(Math.random() * 5)];
+      setCorrectOption(correctOption);
+      setHiddenButtons([]);
+    } else if (String(state.gameMode) === "HSL") {
+      console.log("Entrou no modo de Jogo HSL.");
+      let HSLValue = "";
+      let HSLRandomValues = [];
+      for (let i = 0; i < 6; i++) {
+        HSLValue = Math.floor(Math.random() * 359) + " " + Math.floor(Math.random() * 100) + " " + Math.floor(Math.random() * 100);
+        HSLRandomValues.push(HSLValue);
+      }
+      setColorValues(HSLRandomValues);
+      console.log(HSLRandomValues);
+      const correctOption = HSLRandomValues[Math.floor(Math.random() * 5)];
+      setCorrectOption(correctOption);
+      setHiddenButtons([]);
     }
-    setRGBValues(values);
-    const correctOption = values[Math.floor(Math.random() * 5)];
-    setCorrectOption(correctOption);
-    setHiddenButtons([]);
-  }, [nextRound]);
+  }, [nextRound, state.gameMode]);
 
-  function chooseoption(rbgValue, index) {
-    if (rbgValue === correctOption) {
+  function chooseRGBOption(RGBValue, index) {
+    if (RGBValue === correctOption) {
       setNextRound(!nextRound);
+      dispatch({ type: "CORRECT" });
     } else {
       setHiddenButtons((prev) => [...prev, index]);
+      dispatch({ type: "INCORRECT" });
+    }
+  }
+  function chooseHEXOption(HEXValue, index) {
+    if (HEXValue === correctOption) {
+      setNextRound(!nextRound);
+      dispatch({ type: "CORRECT" });
+    } else {
+      setHiddenButtons((prev) => [...prev, index]);
+      dispatch({ type: "INCORRECT" });
+    }
+  }
+  function chooseHSLOption(HSLValue, index) {
+    if (HSLValue === correctOption) {
+      setNextRound(!nextRound);
+      dispatch({ type: "CORRECT" });
+    } else {
+      setHiddenButtons((prev) => [...prev, index]);
+      dispatch({ type: "INCORRECT" });
     }
   }
 
+  function formatHSL(str) {
+    str = String(str);
+    const parts = str.trim().split(/\s+/).map(Number);
+
+    let [h, s, l] = parts;
+
+    const hText = h !== undefined ? `${h}º` : "";
+    const sText = s !== undefined ? `${s}%` : "";
+    const lText = l !== undefined ? `${l}%` : "";
+
+    const values = [hText, sText, lText].filter(Boolean).join(", ");
+
+    return `Hsl (${values})`;
+  }
+
+  // Exemplos:
+  console.log(formatHSL("140 60 30")); // HSL (140º, 60%, 30%)
+  console.log(formatHSL("50 1 56")); // HSL (50º, 1%, 56%)
+  console.log(formatHSL("200")); // HSL (200º)
+
   return (
     <div className="game-main-content">
-      <h2>
-        {"Rgb (" +
-          correctOption[0] +
-          ", " +
-          correctOption[1] +
-          ", " +
-          correctOption[2] +
-          ")"}
-      </h2>
-      <div className="options-container">
-        {RGBValues.map((rbgValue, i) => (
-          <button
-            id={rbgValue}
-            onClick={() => chooseoption(rbgValue, i)}
-            key={i}
-            className="option-button"
-            style={{
-              backgroundColor:
-                "rgb(" +
-                rbgValue[0] +
-                "," +
-                rbgValue[1] +
-                "," +
-                rbgValue[2] +
-                ")",
-              visibility: hiddenButtons.includes(i) ? "hidden" : "visible",
-            }}
-          ></button>
-        ))}
-      </div>
-      <div className="game-information">
-        {'To interpret an RGB color, use three numbers, typically from 0 to 255, to represent the intensity of red, green, and blue light. The first number is for red, the second for green, and the third for blue. A value of \(0\) means that color is off, and \(255\) means it is at full intensity. By combining these values, you can create any color, with the three primary values combined at full intensity (\(255,255,255\)) resulting in white and all values at zero (\(0,0,0\)) resulting in black'}
-      </div>
+      {state.gameMode === "RGB" ? (
+        <>
+          <h2>{"Rgb (" + correctOption[0] + ", " + correctOption[1] + ", " + correctOption[2] + ")"}</h2>
+          <div className="options-container">
+            {colorValues.map((RGBValue, i) => (
+              <button
+                id={RGBValue}
+                onClick={() => chooseRGBOption(RGBValue, i)}
+                key={i}
+                className="option-button"
+                style={{
+                  backgroundColor: "rgb(" + RGBValue[0] + "," + RGBValue[1] + "," + RGBValue[2] + ")",
+                  visibility: hiddenButtons.includes(i) ? "hidden" : "visible",
+                }}
+              ></button>
+            ))}
+          </div>
+        </>
+      ) : state.gameMode === "HEX" ? (
+        <>
+          <h2>{`Hex #${correctOption}`}</h2>
+          <div className="options-container">
+            {colorValues.map((HEXValue, i) => (
+              <button
+                id={HEXValue}
+                onClick={() => chooseHEXOption(HEXValue, i)}
+                key={i}
+                className="option-button"
+                style={{
+                  backgroundColor: "#" + HEXValue,
+                  visibility: hiddenButtons.includes(i) ? "hidden" : "visible",
+                }}
+              ></button>
+            ))}
+          </div>
+        </>
+      ) : state.gameMode === "HSL" ? (
+        <>
+          <h2>{formatHSL(correctOption)}</h2>
+          <div className="options-container">
+            {colorValues.map((HSLValue, i) => (
+              <button
+                id={HSLValue}
+                onClick={() => chooseHSLOption(HSLValue, i)}
+                key={i}
+                className="option-button"
+                style={{
+                  backgroundColor: "hsl(" + HSLValue + ")",
+                  visibility: hiddenButtons.includes(i) ? "hidden" : "visible",
+                }}
+              ></button>
+            ))}
+          </div>
+        </>
+      ) : (
+        <>
+          <p>No game mode</p>
+        </>
+      )}
+      {state.gameMode === "RGB" ? <RgbTutorial /> : state.gameMode === "HEX" ? <HexTutorial /> : <HslTutorial />}
     </div>
   );
 }
