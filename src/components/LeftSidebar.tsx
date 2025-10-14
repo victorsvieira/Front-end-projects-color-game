@@ -16,11 +16,11 @@ function LeftSidebar() {
       <div className="score-board">
         <div className="points-board">
           <i className="bx  bxs-star"></i>
-          <p>{state.points}</p>
+          <span id="points-counting">{state.points} </span>
         </div>
         <div className="error-board">
-          <i className="bx  bxs-x-circle"></i>
-          <p>{state.mistakes}</p>
+          <i className="bx  bxs-x-circle "></i>
+          <span id="mistakes-counting">{state.mistakes} </span>
         </div>
       </div>
       <div className="game-modes">

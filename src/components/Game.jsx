@@ -15,6 +15,7 @@ function Game() {
   const [hiddenButtons, setHiddenButtons] = useState([]);
 
   useEffect(() => {
+    //let gameDificultyOptions = state.difficulty === "HARD" ? 6 : state.difficulty === "MEDIUM" ? 4 : 3;
     if (String(state.gameMode) === "RGB") {
       console.log("Entrou no modo de Jogo RGB.");
       let RGBValues = [
@@ -25,6 +26,7 @@ function Game() {
         [0, 0, 0],
         [0, 0, 0],
       ];
+
       for (let i = 0; i < 6; i++) {
         for (let j = 0; j < 3; j++) {
           RGBValues[i][j] = Math.floor(Math.random() * 256);
