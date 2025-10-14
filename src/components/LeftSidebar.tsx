@@ -13,16 +13,15 @@ function LeftSidebar() {
 
   return (
     <div className="left-sidebar-main-content">
-      <div className="score-board">
-        <div className="points-board">
-          <i className="bx  bxs-star"></i>
-          <span id="points-counting">{state.points} </span>
-        </div>
-        <div className="error-board">
-          <i className="bx  bxs-x-circle "></i>
-          <span id="mistakes-counting">{state.mistakes} </span>
-        </div>
+      <div className="points-board">
+        <i className="bx  bxs-star"></i>
+        <span id="points-counting">{state.points} </span>
       </div>
+      <div className="error-board">
+        <i className="bx  bxs-x-circle "></i>
+        <span id="mistakes-counting">{state.mistakes} </span>
+      </div>
+
       <div className="game-modes">
         <button onClick={() => handleGameMode("RGB")}>RGB</button>
         <button onClick={() => handleGameMode("HEX")}>HEX</button>

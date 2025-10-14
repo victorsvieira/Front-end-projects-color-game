@@ -24,3 +24,9 @@
   align-items: center;
   gap: 10px;
 }
+
+@media (max-width: 850px) {
+  .right-sidebar-main-content {
+    margin-bottom: 80px;
+  }
+}

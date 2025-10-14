@@ -41,3 +41,32 @@
   justify-content: center;
   align-items: center;
 }
+
+@media (max-width: 1140px) {
+  .all-content {
+    flex-direction: column;
+  }
+  .left-sidebar {
+    align-self: center;
+  }
+  .right-sidebar {
+    align-self: center;
+  }
+}
+
+@media (max-width: 850px) {
+  img {
+    max-width: 90vw;
+  }
+  .main-content,
+  .game-main-content {
+    padding: 10px;
+    margin: 0px;
+    width: auto;
+    max-width: 90vw;
+
+    flex: 0 1 90vw;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+}
