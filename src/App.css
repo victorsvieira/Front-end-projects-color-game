@@ -1,7 +1,7 @@
 #root {
   max-width: 1920px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 25px 0px 0px 0px;
   text-align: center;
 }
 
@@ -68,5 +68,8 @@
     flex: 0 1 90vw;
     min-width: 0;
     box-sizing: border-box;
+  }
+  #root {
+    padding: none;
   }
 }
